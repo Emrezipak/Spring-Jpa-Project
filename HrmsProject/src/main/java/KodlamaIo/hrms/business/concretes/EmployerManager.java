@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import KodlamaIo.hrms.business.abstracts.EmployerService;
 import KodlamaIo.hrms.business.abstracts.UserService;
 import KodlamaIo.hrms.core.utilities.results.DataResult;
-import KodlamaIo.hrms.core.utilities.results.ErorResult;
+import KodlamaIo.hrms.core.utilities.results.ErrorResult;
 import KodlamaIo.hrms.core.utilities.results.Result;
 import KodlamaIo.hrms.core.utilities.results.SuccessDataResult;
 import KodlamaIo.hrms.core.utilities.results.SuccessResult;
@@ -45,13 +45,13 @@ public class EmployerManager implements EmployerService {
 		   user.getWebsite().trim().equals("")||
 		   user.getWebsite()==null) 
 		{
-			return new ErorResult("Belirli alanları doldurunuz...");
+			return new ErrorResult("Belirli alanları doldurunuz...");
 		}
 		if(control(user)) {
-			return new ErorResult("Daha önce kullanılmıştır...");
+			return new ErrorResult("Daha önce kullanılmıştır...");
 		}
 		if(controlPassword(user)) {
-			return new ErorResult("şifreler uyuşmamaktadır...");
+			return new ErrorResult("şifreler uyuşmamaktadır...");
 		}
 		this.employerDao.save(user);
 		this.userService.sendMesagge(user.getEmail());

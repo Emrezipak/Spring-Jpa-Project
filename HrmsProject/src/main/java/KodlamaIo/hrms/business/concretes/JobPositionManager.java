@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import KodlamaIo.hrms.business.abstracts.JobPositionService;
 import KodlamaIo.hrms.core.utilities.results.DataResult;
-import KodlamaIo.hrms.core.utilities.results.ErorResult;
+import KodlamaIo.hrms.core.utilities.results.ErrorResult;
 import KodlamaIo.hrms.core.utilities.results.Result;
 import KodlamaIo.hrms.core.utilities.results.SuccessDataResult;
 import KodlamaIo.hrms.core.utilities.results.SuccessResult;
@@ -33,10 +33,10 @@ public class JobPositionManager implements JobPositionService {
 	public Result save(JobPosition user) {
 		user.setJobName(user.getJobName().toLowerCase());
 		if(user.getJobName()==null || user.getJobName().trim().equals("")) {
-			return new ErorResult("Gerekli alanları doldurunuz...");
+			return new ErrorResult("Gerekli alanları doldurunuz...");
 		}
 		else if(control(user)) {
-			return new ErorResult("Bu isimli bir pozisyon mevcut...");
+			return new ErrorResult("Bu isimli bir pozisyon mevcut...");
 		}
 		
 		this.jobPositionDao.save(user);

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import KodlamaIo.hrms.business.abstracts.JobAdvertisementService;
 import KodlamaIo.hrms.core.utilities.results.DataResult;
-import KodlamaIo.hrms.core.utilities.results.ErorDataResult;
-import KodlamaIo.hrms.core.utilities.results.ErorResult;
+import KodlamaIo.hrms.core.utilities.results.ErrorDataResult;
+import KodlamaIo.hrms.core.utilities.results.ErrorResult;
 import KodlamaIo.hrms.core.utilities.results.Result;
 import KodlamaIo.hrms.core.utilities.results.SuccessDataResult;
 import KodlamaIo.hrms.core.utilities.results.SuccessResult;
@@ -34,13 +34,13 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	public Result add(JobAdvertisement job) {
 		
 		if(job.getMaxSalary()<=0 || job.getMinSalary()<=0) {
-			return new ErorResult("Geçerli bir maaş bilgisi giriniz");
+			return new ErrorResult("Geçerli bir maaş bilgisi giriniz");
 		}
 		if(job.getCity().getId()<=0 || job.getEmployer().getId()<=0 || job.getJobPosition().getId()<=0) {
-			return new ErorResult("Gerekli alanları doldurunuz...");
+			return new ErrorResult("Gerekli alanları doldurunuz...");
 		}
 		if(!controlEmployerId(job.getEmployer().getId())) {
-			return new ErorResult("Kayıtlı bir şirket yok...");
+			return new ErrorResult("Kayıtlı bir şirket yok...");
 		}
 		this.jobAdvertisementDao.save(job);
 		return new SuccessResult("İş ilanı eklendi");
@@ -62,7 +62,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	@Override
 	public DataResult<List<JobAdvertisement>> getByEmployer_companyName(String companyName) {
 		if(jobAdvertisementDao.getByJobConditionIsTrueAndEmployer_CompanyName(companyName).stream().count()==0) {
-			return new ErorDataResult<List<JobAdvertisement>>("Şirket için açık bir ilan bulunamadı...");
+			return new ErrorDataResult<List<JobAdvertisement>>("Şirket için açık bir ilan bulunamadı...");
 		}
 		return new SuccessDataResult<List<JobAdvertisement>>
 		(this.jobAdvertisementDao.getByJobConditionIsTrueAndEmployer_CompanyName(companyName),"Şirketin tüm iş ilanları listelendi...");
@@ -72,7 +72,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	public Result jobAdvertisementActive(int id, String companyName) {
 		JobAdvertisement jobAdvertisement=this.jobAdvertisementDao.getByIdAndEmployer_CompanyName(id, companyName);
 		if(jobAdvertisement==null) {
-			return new ErorResult("Bu isimde bir iş ilanı bulunmuyor...");
+			return new ErrorResult("Bu isimde bir iş ilanı bulunmuyor...");
 		}
 		jobAdvertisement.setJobCondition(!jobAdvertisement.isJobCondition());
 		jobAdvertisementDao.save(jobAdvertisement);

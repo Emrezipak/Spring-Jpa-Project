@@ -39,13 +39,13 @@ public class JobSeekerManager implements JobSeekerService {
 		   user.getPassword()==null || user.getPassword().trim().equals("") ||
 		   user.getIdentificationNo()==null || user.getIdentificationNo().trim().equals("")||
 		   user.getEmail()==null || user.getEmail().trim().equals("")) {
-			return new ErorResult("Gerekli alanları doldurunuz...");
+			return new ErrorResult("Gerekli alanları doldurunuz...");
 		}
 		if(control(user)) {
-			return new ErorResult("Gmail ya da kimlik no daha önceden kayıtlı...");
+			return new ErrorResult("Gmail ya da kimlik no daha önceden kayıtlı...");
 		}
 		else if(controlPassword(user)) {
-			return new ErorResult("Şifreler uyuşmamaktadır...");
+			return new ErrorResult("Şifreler uyuşmamaktadır...");
 		}		
 		
 		this.jobSeekerDao.save(user);
@@ -76,6 +76,12 @@ public class JobSeekerManager implements JobSeekerService {
 	public Result mernisCheckService(JobSeeker jobSeeker) {
 		
 		return new SuccessResult("Mernis doğrulaması başarılı...");
+	}
+
+	@Override
+	public DataResult<JobSeeker> getById(int id) {
+		return new SuccessDataResult<JobSeeker>(jobSeekerDao.getById(id));
+
 	}
 
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import KodlamaIo.hrms.business.abstracts.UserService;
 import KodlamaIo.hrms.core.emailService.EmailService;
-import KodlamaIo.hrms.core.utilities.results.ErorResult;
+import KodlamaIo.hrms.core.utilities.results.ErrorResult;
 import KodlamaIo.hrms.core.utilities.results.Result;
 import KodlamaIo.hrms.core.utilities.results.SuccessResult;
 

@@ -1,12 +1,12 @@
 package KodlamaIo.hrms.core.utilities.results;
 
-public class ErorResult extends Result{
+public class ErrorResult extends Result{
 
-	public ErorResult() {
+	public ErrorResult() {
 		super(false);
 	}
 	
-	public ErorResult(String message) {
+	public ErrorResult(String message) {
 		super(message,false);
 	}
 
